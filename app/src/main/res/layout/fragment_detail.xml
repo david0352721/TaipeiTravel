@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="detailViewModel"
+            type="com.example.taipeitravel.ui.detail.DetailViewModel" />
+    </data>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailFragment"
+    tools:ignore="SpeakableTextPresentCheck">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/detail_toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/purple_200"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:titleTextColor="@color/white" />-->
+
+        <com.youth.banner.Banner
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/detail_banner"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_introduction"
+            android:textColor="@color/black"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toBottomOf="@id/detail_banner" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_address"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/detail_introduction" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_mtel"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/detail_address" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_openMap"
+            android:text="在地圖中打開"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_mtel" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_officialSite"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/detail_openMap" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detail_lastUpdate"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/detail_officialSite" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+</layout>
