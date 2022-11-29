@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TaipeiTravel</string>
+    <string name="prev_page">前のページ</string>
+    <string name="next_page">次のページ</string>
+</resources>

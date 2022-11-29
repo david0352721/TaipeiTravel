@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/lang_tw"
+        android:title="繁體中文"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/lang_en"
+        android:title="英文"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/lang_jp"
+        android:title="日文"
+        tools:ignore="HardcodedText" />
+</menu>

@@ -1,12 +1,9 @@
 package com.example.taipeitravel.ui.detail
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.taipeitravel.model.TravelData
-import com.example.taipeitravel.utility.showDialog
 
 class DetailViewModel : ViewModel() {
 
@@ -20,6 +17,17 @@ class DetailViewModel : ViewModel() {
             }
         }
         return imageList
+    }
+
+    fun sortMonths(months: String): String {
+        val allMonths = months.split(",").toTypedArray()
+        allMonths.sort()
+        var returnMonths = ""
+        allMonths.forEach {
+            returnMonths += "$it,"
+        }
+        returnMonths.substring(0, returnMonths.length - 1)
+        return returnMonths
     }
 
     fun observeViewDataDetail(): LiveData<TravelData.ViewData>{
