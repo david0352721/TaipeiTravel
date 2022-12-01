@@ -1,7 +1,6 @@
 package com.example.taipeitravel.ui.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,6 @@ import com.example.taipeitravel.R
 import com.example.taipeitravel.databinding.ItemHomeBinding
 import com.example.taipeitravel.model.TravelData
 import com.example.taipeitravel.repository.HomeListClickListener
-import kotlinx.android.synthetic.main.item_home.view.*
 
 class HomeAdapter(private val homeListClickListener: HomeListClickListener) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
@@ -42,7 +40,7 @@ class HomeAdapter(private val homeListClickListener: HomeListClickListener) : Re
                 .load(viewDataList[position].images!![0].src)
                 .into(holder.binding.itemHomeImage)
         } else {
-            holder.binding.itemHomeImage.setImageResource(R.drawable.ic_launcher_background)
+            holder.binding.itemHomeImage.setImageResource(R.drawable.home_item_noimage)
         }
         holder.binding.itemHomeGoDetail.setOnClickListener {
             homeListClickListener.onHomeListClickListener(viewDataList[position])

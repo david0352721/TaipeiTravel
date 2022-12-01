@@ -2,4 +2,20 @@
     <string name="app_name">TaipeiTravel</string>
     <string name="prev_page">上一頁</string>
     <string name="next_page">下一頁</string>
+    <string name="detail_addressTitle">地址：</string>
+    <string name="detail_telTitle">電話：</string>
+    <string name="detail_openMonthTitle">開放月份：</string>
+    <string name="detail_openInMapBT">在地圖中打開</string>
+    <string name="detail_officialUrlTitle">官方網站：</string>
+    <string name="detail_travelUrlTitle">台北旅遊網網站：</string>
+    <string name="detail_lastUpdateTitle">最後更新時間：</string>
+    <string name="home_toolbarTitle">景點快搜</string>
+    <string name="toolbar_changeLang">切換語言</string>
+
+    <string-array name="choseLanguages">
+        <item>繁體中文</item>
+        <item>English</item>
+        <item>日本語</item>
+    </string-array>
+
 </resources>

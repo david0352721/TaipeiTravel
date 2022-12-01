@@ -3,4 +3,13 @@
     <string name="app_name">TaipeiTravel</string>
     <string name="prev_page">前のページ</string>
     <string name="next_page">次のページ</string>
+    <string name="detail_addressTitle">住所：</string>
+    <string name="detail_telTitle">電話：</string>
+    <string name="detail_openMonthTitle">開館月：</string>
+    <string name="detail_openInMapBT">マップで開く</string>
+    <string name="detail_officialUrlTitle">公式ウェブサイト：</string>
+    <string name="detail_travelUrlTitle">台北旅行サイト：</string>
+    <string name="detail_lastUpdateTitle">最終更新：</string>
+    <string name="home_toolbarTitle">観光スポット検索</string>
+    <string name="toolbar_changeLang">言語を切り替える</string>
 </resources>

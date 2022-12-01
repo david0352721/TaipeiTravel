@@ -3,4 +3,13 @@
     <string name="app_name">TaipeiTravel</string>
     <string name="prev_page">Prev</string>
     <string name="next_page">Next</string>
+    <string name="detail_addressTitle">address：</string>
+    <string name="detail_telTitle">Tel：</string>
+    <string name="detail_openMonthTitle">Open month：</string>
+    <string name="detail_openInMapBT">Open In Map</string>
+    <string name="detail_officialUrlTitle">Official website：</string>
+    <string name="detail_travelUrlTitle">Taipei Travel Website：</string>
+    <string name="detail_lastUpdateTitle">Last updated：</string>
+    <string name="home_toolbarTitle">Quick Search for Attractions</string>
+    <string name="toolbar_changeLang">switch language</string>
 </resources>

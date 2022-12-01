@@ -16,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.taipeitravel.MainActivity
 import com.example.taipeitravel.databinding.FragmentDetailBinding
 import com.example.taipeitravel.model.TravelData
 import com.youth.banner.adapter.BannerImageAdapter
@@ -64,9 +65,11 @@ class DetailFragment : Fragment() {
             })
                 .addBannerLifecycleObserver(this)
                 .indicator = CircleIndicator(binding.root.context)
+            (requireActivity() as MainActivity).supportActionBar?.title = viewData.name
 
             binding.detailIntroduction.text = viewData.introduction
             binding.detailAddressContent.text = viewData.address
+            binding.detailMtelContent.text = viewData.tel
             binding.detailOfficialSiteContent.paintFlags = binding.detailOfficialSiteContent.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             binding.detailOfficialSiteContent.text = viewData.official_site
             binding.detailOpenMap.setOnClickListener {
@@ -75,6 +78,8 @@ class DetailFragment : Fragment() {
                 mapIntent.setPackage("com.google.android.apps.maps")
                 startActivity(mapIntent)
             }
+            binding.detailUrlContent.paintFlags = binding.detailUrlContent.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            binding.detailUrlContent.text = viewData.url
             binding.detailLastUpdateContent.text = viewData.modified
             binding.detailOpenMonthContent.text = viewModel.sortMonths(viewData.months.toString())
 
@@ -84,6 +89,11 @@ class DetailFragment : Fragment() {
 
             binding.detailOfficialSiteContent.setOnClickListener {
                 val action = DetailFragmentDirections.actionDetailFragmentToWebFragment(viewData.official_site)
+                findNavController().navigate(action)
+            }
+
+            binding.detailUrlContent.setOnClickListener {
+                val action = DetailFragmentDirections.actionDetailFragmentToWebFragment(viewData.url)
                 findNavController().navigate(action)
             }
 
