@@ -1,7 +1,7 @@
 package com.example.taipeitravel.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 data class TravelData(
     val total: Int? = 0,
