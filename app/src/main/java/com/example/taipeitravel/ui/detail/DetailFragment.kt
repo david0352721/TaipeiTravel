@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,23 +14,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.taipeitravel.MainActivity
 import com.example.taipeitravel.databinding.FragmentDetailBinding
 import com.example.taipeitravel.model.TravelData
+import com.example.taipeitravel.repository.DetailCategoryClickListener
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), DetailCategoryClickListener {
 
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
     private var imageList = ArrayList<String>()
+    private lateinit var detailCategoryAdapter: DetailCategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,9 +49,16 @@ class DetailFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
+        detailCategoryAdapter = DetailCategoryAdapter(this)
+        binding.detailCategoryContentRecyclerView.apply {
+            layoutManager = GridLayoutManager(binding.root.context, 3)
+            adapter = detailCategoryAdapter
+        }
+
         val viewData = args.clickViewData
         viewModel.viewDataDetail.value = viewData
         imageList = viewModel.getDetailImages(viewData.images!!)
+        viewModel.setCategoryList(viewData.category!!)
         viewModel.observeViewDataDetail().observe(viewLifecycleOwner) {
             binding.detailBanner.setAdapter(object : BannerImageAdapter<TravelData.ViewData.ViewImage?>(viewData.images) {
                 override fun onBindView(
@@ -70,18 +81,24 @@ class DetailFragment : Fragment() {
             binding.detailIntroduction.text = viewData.introduction
             binding.detailAddressContent.text = viewData.address
             binding.detailMtelContent.text = viewData.tel
+            binding.detailOpenMonthContent.text = viewModel.sortMonths(viewData.months.toString())
+
+            viewModel.observeViewCategoryList().observe(viewLifecycleOwner) {
+                detailCategoryAdapter.setViewCategoryList(it)
+            }
+
+            binding.detailTargetContent.text = viewModel.getTargetList(viewData.target!!)
             binding.detailOfficialSiteContent.paintFlags = binding.detailOfficialSiteContent.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             binding.detailOfficialSiteContent.text = viewData.official_site
+            binding.detailUrlContent.paintFlags = binding.detailUrlContent.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            binding.detailUrlContent.text = viewData.url
+            binding.detailLastUpdateContent.text = viewData.modified
             binding.detailOpenMap.setOnClickListener {
                 val gmmIntentUri = Uri.parse("geo:${viewData.nlat}, ${viewData.elong}?q=${viewData.name}")
                 val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                 mapIntent.setPackage("com.google.android.apps.maps")
                 startActivity(mapIntent)
             }
-            binding.detailUrlContent.paintFlags = binding.detailUrlContent.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-            binding.detailUrlContent.text = viewData.url
-            binding.detailLastUpdateContent.text = viewData.modified
-            binding.detailOpenMonthContent.text = viewModel.sortMonths(viewData.months.toString())
 
             if (viewData.official_site.isNullOrEmpty()) {
                 binding.detailOfficialSiteContent.isVisible = false
@@ -99,6 +116,12 @@ class DetailFragment : Fragment() {
 
         }
 
+    }
+
+    override fun onDetailCategoryClickListener(categoryId: String) {
+        Log.d("Detail", "click category: $categoryId")
+        val action = DetailFragmentDirections.actionDetailFragmentToHomeFragment().setCategoryId(categoryId)
+        findNavController().navigate(action)
     }
 
 }

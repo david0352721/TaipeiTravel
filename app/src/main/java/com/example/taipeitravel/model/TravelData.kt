@@ -32,7 +32,7 @@ data class TravelData(
         val url: String? = "",
         val category: List<ViewCategory>?,
         val target: List<ViewTarget>?,
-        val service: List<ViewService>?,
+        val service: List<ViewService?>?,
         val images: List<ViewImage>?,
         val links: List<ViewLink>?
     )

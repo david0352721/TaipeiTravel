@@ -12,4 +12,6 @@
     <string name="detail_lastUpdateTitle">Last updated：</string>
     <string name="home_toolbarTitle">Quick Search for Attractions</string>
     <string name="toolbar_changeLang">switch language</string>
+    <string name="detail_categoryTitle">Subject classification：</string>
+    <string name="detail_targetTitle">Recommended for：</string>
 </resources>

@@ -16,6 +16,9 @@
             android:id="@+id/action_detailFragment_to_webFragment"
             app:destination="@id/webFragment"
             app:popUpTo="@id/detailFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -26,6 +29,11 @@
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment"
             app:popUpTo="@id/homeFragment" />
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
     <fragment
         android:id="@+id/webFragment"

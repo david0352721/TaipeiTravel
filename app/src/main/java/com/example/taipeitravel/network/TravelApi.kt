@@ -11,6 +11,6 @@ interface TravelApi {
 
     @Headers("Accept: application/json")
     @GET("{lang}/Attractions/All")
-    fun getAllViews(@Path("lang") lang: String, @Query("page") page: Int): Call<TravelData>
+    fun getAllViews(@Path("lang") lang: String, @Query("categoryIds") categoryId: String?, @Query("page") page: Int): Call<TravelData>
 
 }

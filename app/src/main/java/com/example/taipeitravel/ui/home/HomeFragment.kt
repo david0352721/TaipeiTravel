@@ -12,6 +12,7 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.taipeitravel.R
 import com.example.taipeitravel.databinding.FragmentHomeBinding
@@ -26,6 +27,8 @@ class HomeFragment : Fragment(), HomeListClickListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var preferences: SharedPreferences
+    private val args: HomeFragmentArgs by navArgs()
+    private var categoryId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,16 +44,24 @@ class HomeFragment : Fragment(), HomeListClickListener {
         preferences = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
         val apiLang = preferences.getString("apiLang", "zh-tw").toString()
 
+
+
         homeAdapter = HomeAdapter(this)
         binding.homeRecyclerView.apply {
             layoutManager = GridLayoutManager(binding.root.context, 1)
             adapter = homeAdapter
         }
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+
+        if (args.categoryId != null) {
+            categoryId = args.categoryId
+            viewModel.setCategoryId(categoryId!!)
+        }
+
         viewModel.getTravelData(apiLang)
         viewModel.observeViewDataLiveData().observe(viewLifecycleOwner) {
             homeAdapter.setViewDataList(it)
-            if (it.size > 30) {
+            if (it.size < 30) {
                 binding.homeNextBT.isVisible = false
             }
         }

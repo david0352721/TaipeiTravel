@@ -11,12 +11,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
+
     private var viewDataLiveData = MutableLiveData<List<TravelData.ViewData>>()
-    private var pageCountLiveData = MutableLiveData<Int>(1)
+    private var pageCountLiveData = MutableLiveData(1)
+    private var categoryIdsLiveData = MutableLiveData<String?>()
     private var failConnectLiveData = MutableLiveData<String>()
 
     fun getTravelData(apiLang: String) {
-        TravelInstance.api.getAllViews(apiLang, pageCountLiveData.value!!.toInt()).enqueue(object : Callback<TravelData>{
+        TravelInstance.api.getAllViews(apiLang, categoryIdsLiveData.value, pageCountLiveData.value!!.toInt()).enqueue(object : Callback<TravelData>{
             override fun onResponse(call: Call<TravelData>, response: Response<TravelData>) {
                 if (response.body() != null) {
                     viewDataLiveData.value = response.body()!!.data!!
@@ -53,6 +55,10 @@ class HomeViewModel : ViewModel() {
     fun getNextList(apiLang: String) {
         pageCountLiveData.value = pageCountLiveData.value?.plus(1)
         getTravelData(apiLang)
+    }
+
+    fun setCategoryId(categoryId: String) {
+        categoryIdsLiveData.value = categoryId
     }
 
     fun observePageCountLiveData(): LiveData<Int> {
