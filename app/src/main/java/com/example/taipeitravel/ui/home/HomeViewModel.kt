@@ -33,6 +33,7 @@ class HomeViewModel : ViewModel() {
                         maxPageCountLiveData.value = response.body()!!.total!! / 30
                     }
                     viewDataLiveData.value = response.body()!!.data!!
+                    //切換語言 但是用ArrayList增加 所以舊的並沒有被清掉
                     for (i in 0 until viewDataLiveData.value!!.size) {
                         viewDataArray.value!!.add(viewDataLiveData.value!![i])
                     }
@@ -60,6 +61,10 @@ class HomeViewModel : ViewModel() {
 
     fun changeLangList(changeLang: String) {
         getTravelData(changeLang)
+    }
+
+    fun removeAll() {
+        viewDataArray.value!!.clear()
     }
 
     fun loadMore(apiLang: String) {

@@ -14,4 +14,5 @@
     <string name="toolbar_changeLang">言語を切り替える</string>
     <string name="detail_categoryTitle">対象分類：</string>
     <string name="detail_targetTitle">おすすめのオブジェクト：</string>
+    <string name="home_recyclerViewLast">底です!!</string>
 </resources>

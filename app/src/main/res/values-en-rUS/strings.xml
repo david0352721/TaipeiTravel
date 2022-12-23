@@ -14,4 +14,5 @@
     <string name="toolbar_changeLang">switch language</string>
     <string name="detail_categoryTitle">Subject classification：</string>
     <string name="detail_targetTitle">Recommended for：</string>
+    <string name="home_recyclerViewLast">It\'s bottom!!</string>
 </resources>

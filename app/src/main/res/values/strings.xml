@@ -19,5 +19,6 @@
         <item>English</item>
         <item>日本語</item>
     </string-array>
+    <string name="home_recyclerViewLast">到底部囉!!</string>
 
 </resources>

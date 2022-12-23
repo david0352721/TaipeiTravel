@@ -76,9 +76,9 @@ class HomeFragment : Fragment(), HomeListClickListener {
         binding.homeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(requireContext(), "Last", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), resources.getString(R.string.home_recyclerViewLast), Toast.LENGTH_LONG).show()
                     if (maxPage <= nowPage) {
-                        Toast.makeText(requireContext(), "no more load", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), resources.getString(R.string.home_recyclerViewLast), Toast.LENGTH_LONG).show()
                     } else {
                         binding.homeProgressBar.isVisible = true
                         viewModel.loadMore(apiLang)
@@ -103,21 +103,24 @@ class HomeFragment : Fragment(), HomeListClickListener {
                             .setItems(languageItems) { dialog, which ->
                                 when (which) {
                                     0 -> {
+                                        viewModel.removeAll()
                                         LocaleHelper().setLocale(requireContext(), "zh", "TW")
-                                        requireActivity().recreate()
                                         viewModel.changeLangList("zh-tw")
+                                        requireActivity().recreate()
                                         dialog.dismiss()
                                     }
                                     1 -> {
+                                        viewModel.removeAll()
                                         LocaleHelper().setLocale(requireContext(), "en", "US")
-                                        requireActivity().recreate()
                                         viewModel.changeLangList("en")
+                                        requireActivity().recreate()
                                         dialog.dismiss()
                                     }
                                     2 -> {
+                                        viewModel.removeAll()
                                         LocaleHelper().setLocale(requireContext(), "ja", "JP")
-                                        requireActivity().recreate()
                                         viewModel.changeLangList("ja")
+                                        requireActivity().recreate()
                                         dialog.dismiss()
                                     }
                                 }

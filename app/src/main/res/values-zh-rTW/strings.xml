@@ -14,4 +14,5 @@
     <string name="toolbar_changeLang">切換語言</string>
     <string name="detail_categoryTitle">主題分類：</string>
     <string name="detail_targetTitle">推薦對象：</string>
+    <string name="home_recyclerViewLast">到底部囉!!</string>
 </resources>
