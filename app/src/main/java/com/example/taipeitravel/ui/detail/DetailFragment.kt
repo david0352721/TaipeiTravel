@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -51,7 +51,7 @@ class DetailFragment : Fragment(), DetailCategoryClickListener {
 
         detailCategoryAdapter = DetailCategoryAdapter(this)
         binding.detailCategoryContentRecyclerView.apply {
-            layoutManager = GridLayoutManager(binding.root.context, 3)
+            layoutManager = LinearLayoutManager(binding.root.context)
             adapter = detailCategoryAdapter
         }
 

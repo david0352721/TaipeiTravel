@@ -13,15 +13,30 @@ import retrofit2.Response
 class HomeViewModel : ViewModel() {
 
     private var viewDataLiveData = MutableLiveData<List<TravelData.ViewData>>()
+    private var viewDataArray = MutableLiveData<ArrayList<TravelData.ViewData>>()
     private var pageCountLiveData = MutableLiveData(1)
     private var categoryIdsLiveData = MutableLiveData<String?>()
     private var failConnectLiveData = MutableLiveData<String>()
+    private var maxPageCountLiveData = MutableLiveData<Int?>()
+
+    init {
+        viewDataArray.value = arrayListOf()
+    }
 
     fun getTravelData(apiLang: String) {
         TravelInstance.api.getAllViews(apiLang, categoryIdsLiveData.value, pageCountLiveData.value!!.toInt()).enqueue(object : Callback<TravelData>{
             override fun onResponse(call: Call<TravelData>, response: Response<TravelData>) {
                 if (response.body() != null) {
+                    if ((response.body()!!.total!! / 30) > 0) {
+                        maxPageCountLiveData.value = (response.body()!!.total!! / 30) + 1
+                    } else {
+                        maxPageCountLiveData.value = response.body()!!.total!! / 30
+                    }
                     viewDataLiveData.value = response.body()!!.data!!
+                    for (i in 0 until viewDataLiveData.value!!.size) {
+                        viewDataArray.value!!.add(viewDataLiveData.value!![i])
+                    }
+                    viewDataArray.value = viewDataArray.value
                 }
             }
 
@@ -47,18 +62,19 @@ class HomeViewModel : ViewModel() {
         getTravelData(changeLang)
     }
 
-    fun getPrevList(apiLang: String) {
-        pageCountLiveData.value = pageCountLiveData.value?.minus(1)
-        getTravelData(apiLang)
-    }
-
-    fun getNextList(apiLang: String) {
+    fun loadMore(apiLang: String) {
         pageCountLiveData.value = pageCountLiveData.value?.plus(1)
-        getTravelData(apiLang)
+        if (pageCountLiveData.value!! <= maxPageCountLiveData.value!!) {
+            getTravelData(apiLang)
+        }
     }
 
     fun setCategoryId(categoryId: String) {
         categoryIdsLiveData.value = categoryId
+    }
+
+    fun observeMaxPageCount(): MutableLiveData<Int?> {
+        return maxPageCountLiveData
     }
 
     fun observePageCountLiveData(): LiveData<Int> {
@@ -68,8 +84,8 @@ class HomeViewModel : ViewModel() {
         return pageCountLiveData
     }
 
-    fun observeViewDataLiveData(): LiveData<List<TravelData.ViewData>> {
-        return viewDataLiveData
+    fun observeViewDataArray(): MutableLiveData<ArrayList<TravelData.ViewData>> {
+        return viewDataArray
     }
 
 }

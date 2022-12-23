@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taipeitravel.R
 import com.example.taipeitravel.databinding.FragmentHomeBinding
 import com.example.taipeitravel.model.TravelData
@@ -43,8 +44,8 @@ class HomeFragment : Fragment(), HomeListClickListener {
 
         preferences = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
         val apiLang = preferences.getString("apiLang", "zh-tw").toString()
-
-
+        var maxPage = 0
+        var nowPage = 0
 
         homeAdapter = HomeAdapter(this)
         binding.homeRecyclerView.apply {
@@ -59,27 +60,33 @@ class HomeFragment : Fragment(), HomeListClickListener {
         }
 
         viewModel.getTravelData(apiLang)
-        viewModel.observeViewDataLiveData().observe(viewLifecycleOwner) {
+        viewModel.observeViewDataArray().observe(viewLifecycleOwner) {
             homeAdapter.setViewDataList(it)
-            if (it.size < 30) {
-                binding.homeNextBT.isVisible = false
-            }
+            binding.homeProgressBar.isVisible = false
         }
-//        viewModel.observeLangLiveData().observe(viewLifecycleOwner) {
-//            Log.d("Home", "lang: $it")
-//        }
+
         viewModel.observePageCountLiveData().observe(viewLifecycleOwner) {
-            Log.d("Home", "page: $it")
-            binding.homePrevBT.isVisible = it != 1
+            nowPage = it
         }
 
-        binding.homePrevBT.setOnClickListener {
-            viewModel.getPrevList(apiLang)
+        viewModel.observeMaxPageCount().observe(viewLifecycleOwner) {
+            maxPage = it!!
         }
 
-        binding.homeNextBT.setOnClickListener {
-            viewModel.getNextList(apiLang)
-        }
+        binding.homeRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(requireContext(), "Last", Toast.LENGTH_LONG).show()
+                    if (maxPage <= nowPage) {
+                        Toast.makeText(requireContext(), "no more load", Toast.LENGTH_LONG).show()
+                    } else {
+                        binding.homeProgressBar.isVisible = true
+                        viewModel.loadMore(apiLang)
+                    }
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object: MenuProvider {
@@ -118,24 +125,6 @@ class HomeFragment : Fragment(), HomeListClickListener {
                             .show()
                         true
                     }
-//                    R.id.lang_tw -> {
-//                        LocaleHelper().setLocale(requireContext(), "zh", "TW")
-//                        requireActivity().recreate()
-//                        viewModel.changeLangList("zh-tw")
-//                        true
-//                    }
-//                    R.id.lang_en -> {
-//                        LocaleHelper().setLocale(requireContext(), "en", "US")
-//                        requireActivity().recreate()
-//                        viewModel.changeLangList("en")
-//                        true
-//                    }
-//                    R.id.lang_jp -> {
-//                        LocaleHelper().setLocale(requireContext(), "ja", "JP")
-//                        requireActivity().recreate()
-//                        viewModel.changeLangList("ja")
-//                        true
-//                    }
                     else -> false
                 }
             }
